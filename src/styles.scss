@@ -73,7 +73,7 @@ a {
   }
 
   &__button {
-    padding: 5px 20px;
+    padding: 4px 6px;
     font-size: 12px;
     background: #d73283;
     border: 0;
@@ -81,8 +81,10 @@ a {
     color: white;
     cursor: pointer;
     font-weight: bold;
-    transition: all linear .15s;
-    margin: 0 4px;
+    transition: all linear 0.15s;
+    margin: 2px 4px;
+    display: inline-flex;
+    font-size: 11px;
   
     &:hover {
       background: #b237d4;
