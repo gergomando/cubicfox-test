@@ -14,7 +14,6 @@
 			type="text" 
 			class="users__search-input"
 			formControlName="firstName"
-			placeholder="..."
 		/>
 	</div>
 
@@ -26,7 +25,6 @@
 			type="text" 
 			class="form-control users__search-input"
 			formControlName="lastName"
-			placeholder="..."
 		/>
 	</div>
 	<button type="submit" class="button">Search</button>
@@ -51,10 +49,21 @@
 					Absences
 				</a>
 
-				<a class="table__button" routerLink="/user-absences-create">
+				<a class="table__button" [routerLink]="['/user-absences-create', user.Id]">
 					Create Absence
 				</a>
 			</td>
 		</tr>
+    <tr *ngIf="loading">
+      <td colspan="4">
+        Loading...
+      </td>
+    </tr>
+
+    <tr *ngIf="error">
+      <td colspan="4">
+        Something went wrong. Please check the settings.
+      </td>
+    </tr>
 	</tbody>
 </table>

@@ -23,18 +23,28 @@ export class UsersComponent implements OnInit {
   searchForm = new FormGroup({
     firstName: new FormControl('', Validators.minLength(1)),
     lastName: new FormControl('', Validators.minLength(1)),
-   }); 
+  });
+  loading = false;
+  error = false;
 
   constructor(
     private readonly apiService: ApiService
   ) {}
   
    ngOnInit(): void {
-     this.apiService.fetchDataFromApi('/Users?userType=0')
+    this.error = false;
+    this.loading = true;
+    this.apiService.fetchDataFromApi('/Users?userType=0')
       .subscribe((response: any) => {
-        console.log(response);
+        if (response.status === 401) {
+          this.loading = false;
+          this.error = true;
+          return;
+        }
+
         this.usersList = response;
         this.apiResponse = response;
+        this.loading = false;
       });
    }
 

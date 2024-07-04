@@ -2,39 +2,56 @@
 	<app-headline title="Absences"></app-headline>
 </div>
 
-<form class="absences__form" [formGroup]="form" (ngSubmit)="onFormSubmit()">
+<form class="absences__form" [formGroup]="form" (ngSubmit)="search()">
 	<div class="form-group">
-		<label for="selectedDate" class="absences__form-label">
+		<label for="selectedDate" class="form-label">
 			Selected Date
 		</label>
 		<input 
-			type="text" 
+			type="date" 
 			class="form-control absences__search-input"
 			formControlName="selectedDate"
 			placeholder="..."
 		/>
 	</div>
 	<button type="submit" class="button">Search</button>
+	<button 
+		type="button" 
+		class="button"
+		(click)="updateView()"
+	>Update view</button>
 </form>
 
-
+<p *ngIf="lastSelectedDate">
+	Absences on the day: {{ lastSelectedDate }}
+</p>
 <table class="table">
 	<thead>
 		<tr>
+			<th>Date From</th>
+			<th>Date To</th>
+			<th>Absence Definition</th>
 			<th>First Name</th>
 			<th>Last Name</th>
-			<th>Date</th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr>
-			<td>Gergo</td>
-			<td>Mando</td>
-			<td>2024.07.08</td>
-		<tr>
-			<td>Gergo</td>
-			<td>Mando</td>
-			<td>2024.07.09</td>
+		<tr *ngFor="let absence of absences">
+			<td>{{ getDate(absence.PartialTimeFrom) }}</td>
+			<td>{{ getDate(absence.PartialTimeTo) }}</td>
+			<td>{{ absence.AbsenceDefinitionName }}</td>
+			<td>{{ absence.FirstName }}</td>
+			<td>{{ absence.LastName }}</td>
+		</tr>
+		<tr *ngIf="loading">
+			<td colspan="5">
+				Loading...
+			</td>
+		</tr>
+    <tr *ngIf="error">
+			<td colspan="5">
+			  Something went wrong. Please check the settings.
+			</td>
 		</tr>
 	</tbody>
 </table>

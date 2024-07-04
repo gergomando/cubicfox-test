@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -18,32 +18,36 @@ export class UserAbsencesCreateComponent implements OnInit {
     PartialTimeFrom: new FormControl('', Validators.minLength(1)),
     PartialTimeTo: new FormControl('', Validators.minLength(1)),
     AbsenceDefinitionId: new FormControl('', Validators.minLength(1)),
-    Comment: new FormControl('', Validators.minLength(1)),
+    Comment: new FormControl(''),
   });
-
   userId: string | null = '';
   absenceDefinitions: any[] = [];
+  loading = false;
 
   constructor(
     private readonly route: ActivatedRoute,
-    private readonly apiService: ApiService
+    private readonly apiService: ApiService,
+    private readonly router: Router
   ) {}
 
   ngOnInit(): void {
     this.userId = this.route.snapshot.paramMap.get('id');
-
     this.apiService.fetchDataFromApi('/AbsenceDefinitions/')
     .subscribe((response: any) => {
       if(response && !!response.length) {
         this.absenceDefinitions = response;
         this.form.patchValue({
           AbsenceDefinitionId: response[0].Id,
+          PartialTimeFrom: new Date().toISOString().split('T')[0],
+          PartialTimeTo: new Date().toISOString().split('T')[0]
         });
       }
     });
   }
 
   createAbsence(): void {
+    this.loading = true;
+
     const TimeStamp = new Date().toISOString();
     const PartialTimeFrom = this.form.get('PartialTimeFrom')?.value || '';
     const PartialTimeTo = this.form.get('PartialTimeTo')?.value || '';
@@ -62,7 +66,10 @@ export class UserAbsencesCreateComponent implements OnInit {
       OverrideHolidayAbsence: true
     };
 
-    this.apiService.postDataToApi('/Absences', absence).subscribe(response => console.log(response) );
+    this.apiService.postDataToApi('/Absences', absence).subscribe(() => {
+      this.loading = false;
+      this.router.navigate(['user-absences', this.userId]);
+    });
   }
 
   isAbsenceDefinitionSelected(absenceDefinitionId: string): boolean {

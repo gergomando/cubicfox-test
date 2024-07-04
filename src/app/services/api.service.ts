@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, catchError, map, of, throwError } from 'rxjs';
 import { API_BASE_URL } from '../../constants';
 import { StorageService } from './storage.service';
 
@@ -26,7 +26,14 @@ export class ApiService {
   fetchDataFromApi(endPointUrl: string): Observable<unknown> {
     return this.http.get<any>(API_BASE_URL + endPointUrl, this.getHeaders())
       .pipe(
-        map((response: any) => response)
+        map((response: any) => response),
+        catchError((error: HttpErrorResponse) => {
+          if (error.status != 200) {
+            return of(error);
+          } else {
+            return throwError(() => new Error(error.toString()));
+          }
+        })
       );
   }
 

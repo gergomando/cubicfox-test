@@ -3,18 +3,24 @@
 <form class="user-create__form" [formGroup]="form" (ngSubmit)="createUser()">
 	<div class="form-group">
 		<label for="firstName" class="form-label">
-			First Name
+			*First Name
 		</label>
 		<input 
 			type="text" 
 			class="form-control"
 			formControlName="firstName"
 		/>
+    <span 
+      class="form-control__error" 
+      *ngIf="(form.controls.firstName.touched || submitted) && !form.controls.firstName.valid"
+    >
+      *First name is required
+  </span>
 	</div>
 
 	<div class="form-group">
 		<label for="firstName" class="form-label">
-			Last Name
+			*Last Name
 		</label>
 		<input 
 			type="text" 
@@ -22,17 +28,31 @@
 			formControlName="lastName"
 	
 		/>
+		<span 
+			class="form-control__error" 
+			*ngIf="(form.controls.lastName.touched || submitted) && !form.controls.lastName.valid"
+		>
+			*Last name is required
+		</span> 
 	</div>
 
     <div class="form-group">
 		<label for="email" class="form-label">
-			Email
+			*Email
 		</label>
 		<input 
 			type="text" 
 			class="form-control"
 			formControlName="email"
 		/>
+		<span 
+			class="form-control__error" 
+			*ngIf="(form.controls.email.touched || submitted) && !form.controls.email.valid"
+		>
+			*Email must be a valid email
+		</span> 
 	</div>
-	<button type="submit" class="button">Create User</button>
+	<button type="submit" class="button">
+		Create User <span *ngIf="loading"> In progress...</span>
+	</button>
 </form>
