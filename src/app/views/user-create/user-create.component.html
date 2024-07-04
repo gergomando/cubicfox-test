@@ -1,0 +1,38 @@
+<app-headline title="Add new User"></app-headline>
+
+<form class="user-create__form" [formGroup]="form" (ngSubmit)="createUser()">
+	<div class="form-group">
+		<label for="firstName" class="form-label">
+			First Name
+		</label>
+		<input 
+			type="text" 
+			class="form-control"
+			formControlName="firstName"
+		/>
+	</div>
+
+	<div class="form-group">
+		<label for="firstName" class="form-label">
+			Last Name
+		</label>
+		<input 
+			type="text" 
+			class="form-control"
+			formControlName="lastName"
+	
+		/>
+	</div>
+
+    <div class="form-group">
+		<label for="email" class="form-label">
+			Email
+		</label>
+		<input 
+			type="text" 
+			class="form-control"
+			formControlName="email"
+		/>
+	</div>
+	<button type="submit" class="button">Create User</button>
+</form>

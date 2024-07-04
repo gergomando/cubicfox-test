@@ -1,0 +1,50 @@
+<app-headline title="Add new Absence"></app-headline>
+
+<form class="user-absences-create__form" [formGroup]="form" (ngSubmit)="createAbsence()">
+	<div class="form-group">
+		<label for="absenceDefinitionId" class="form-label">
+			Absence Definitions
+		</label>
+		<select class="form-control" formControlName="AbsenceDefinitionId">
+            <option 
+                *ngFor="let definition of absenceDefinitions"
+                [value]="definition.Id">
+                {{ definition.Name }}
+            </option>
+        </select>
+	</div>
+
+    <div class="form-group">
+		<label for="PartialTimeFrom" class="form-label">
+			Absence Date From
+		</label>
+		<input 
+			type="date" 
+			class="form-control"
+			formControlName="PartialTimeFrom"
+		/>
+	</div>
+
+    <div class="form-group">
+		<label for="PartialTimeTo" class="form-label">
+			Absence Date To
+		</label>
+		<input 
+			type="date" 
+			class="form-control"
+			formControlName="PartialTimeTo"
+		/>
+	</div>
+
+    <div class="form-group">
+		<label for="Comment" class="form-label">
+			Comment
+		</label>
+		<input 
+			type="text" 
+			class="form-control"
+			formControlName="Comment"
+		/>
+	</div>
+	<button type="submit" class="button">Create User</button>
+</form>

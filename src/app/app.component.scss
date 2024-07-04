@@ -1,0 +1,18 @@
+body {
+  margin: 0;
+}
+
+.app {
+  display: flex;
+
+  &__menu {
+    width: 20%;
+  }
+
+  &__main-content {
+    width: 80%;
+    padding: 50px 60px;
+    background: #fff0f4;
+    flex: 1;
+  }
+}

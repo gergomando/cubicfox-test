@@ -1,0 +1,27 @@
+<div class="settings__action-bar">
+	<app-headline title="Settings"></app-headline>
+</div>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Property</th>
+			<th>Value</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Access token</td>
+			<td>
+        <form class="settings__token-form" [formGroup]="form" (ngSubmit)="onFormSubmit()">
+          <input 
+            type="text" 
+            class="form-control settings__token-form-input"
+            formControlName="accessToken"
+          />
+          <button type="submit" class="button">Save</button>
+        </form>
+      </td>
+		</tr>
+	</tbody>
+</table>

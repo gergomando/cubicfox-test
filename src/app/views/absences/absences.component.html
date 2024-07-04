@@ -1,0 +1,40 @@
+<div class="absences__action-bar">
+	<app-headline title="Absences"></app-headline>
+</div>
+
+<form class="absences__form" [formGroup]="form" (ngSubmit)="onFormSubmit()">
+	<div class="form-group">
+		<label for="selectedDate" class="absences__form-label">
+			Selected Date
+		</label>
+		<input 
+			type="text" 
+			class="form-control absences__search-input"
+			formControlName="selectedDate"
+			placeholder="..."
+		/>
+	</div>
+	<button type="submit" class="button">Search</button>
+</form>
+
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>First Name</th>
+			<th>Last Name</th>
+			<th>Date</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Gergo</td>
+			<td>Mando</td>
+			<td>2024.07.08</td>
+		<tr>
+			<td>Gergo</td>
+			<td>Mando</td>
+			<td>2024.07.09</td>
+		</tr>
+	</tbody>
+</table>
